@@ -502,10 +502,19 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  /* MP-Perf #1
+  Moved calculation of 'var phase' outside for loop
+  This uses scrollTop which triggers layout
+  For loop changes style
+  Therefore a FSL issue is avoided, as layout doesn't have to be recalculated each time
+  -- Time to generate 10 frames before improvement = c. 60ms
+  -- Time to generate 10 frames after improvement = c. 2.5 ms */
+
   var items = document.querySelectorAll('.mover');
+  var phase = Math.sin((document.body.scrollTop / 1250));
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.left = items[i].basicLeft + (100 * phase + (i % 5)) + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
