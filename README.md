@@ -10,6 +10,7 @@ Changes made are summarised below. More detail in code comments.
 
 * MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
 * MP-Perf#5 (index.html) Shrink icon images for homepage using gulp/GraphicsMagick
+* MP-Perf#6 (all html files/perfmatters.js) Moved Google Analytics script to perfmatters.js file. This means is no longer render-blocking as can be loaded asynchronously using async tag.
 
 ### Changes made: Cam's Pizzeria
 
