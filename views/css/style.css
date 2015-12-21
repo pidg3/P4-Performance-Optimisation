@@ -38,7 +38,16 @@ form {
 .randomPizzaContainer {
   float: left;
   display: flex;
+  width: 33.33%;
 }
+
+@media (max-width: 1000px) { 
+  .randomPizzaContainer {
+    float: none;
+    width: 100%;
+  }
+}
+
 
 .randomPizzaContainer:after {
   content: "";

@@ -373,7 +373,7 @@ var pizzaElementGenerator = function(i) {
   pizzaDescriptionContainer = document.createElement("div");
 
   pizzaContainer.classList.add("randomPizzaContainer");
-  pizzaContainer.style.width = "33.33%";
+  // pizzaContainer.style.width = "33.33%";
   pizzaContainer.style.height = "325px";
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
   pizzaImageContainer.classList.add("col-md-6");
@@ -418,6 +418,7 @@ var resizePizzas = function(size) {
   // only one switcher - combined setting size with updating text
   // move to simplified % size change. TODO - re-work sizing
   // TODO - summarise and comment change
+  // Other improvements - onload, formatting
   function changeSlider(size) {
     console.log("changeSlider() run");
     switch(size) {
@@ -456,6 +457,10 @@ var resizePizzas = function(size) {
   window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
+};
+
+window.onload = function() {
+  resizePizzas('3');
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
