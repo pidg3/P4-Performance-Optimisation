@@ -1,5 +1,24 @@
 ## Website Performance Optimization portfolio project
 
+Here's my effort at P4 for the Udacity Front End Nanodegree course. 
+
+This project was all about perforance optimisation - both for initial page load, and for interaction/animations once page has loaded. 
+
+Changes made are summarised below. More detail in code comments.
+
+### Changes made: Portfolio Page
+
+
+
+### Main changes made: Cam's Pizzeria
+
+* MP-Perf#1 (main.js) Moved layout calculation outide of for loop to avoid forced synchronous layout issue. c. 20X performance improvement. 
+* MP-Perf#2 (main.js) Defined new variable allPizzas outside sub-functions so only have to calculate once and avoid FSL. Only one switch function - updates text AND returns new pizza size. onload function sets initial value to 'medium'.
+* (main.js) Added extra two settings to the slider.
+* (main.js/style.css) Made pizza columns responsive (otherwise pizzas get messed up on mobile/small screens).
+
+#### Original Readme:
+
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
 
 To get started, check out the repository, inspect the code,

@@ -411,14 +411,15 @@ var resizePizzas = function(size) {
     ginormous: '180px'
   };
 
+  /* MP-Perf#2
+  Defined new variable allPizzas (DRY) to replace multiple querySelectorAll calls (DRY)
+  Combined bith switchers - same one update text using .innerHTML and updates actual pizza size via return value
+  Moved to simplied setting on size - just a px value, no further sub-functions/calculations
+  Styling changes in style.css to support this, added media query
+  Onload function added to ensure always start @ medium size
+  */
   var allPizzas = document.querySelectorAll(".randomPizzaContainer > .col-md-6 > .img-responsive");
-  // Changes the value for the size of the pizza above the slider
-  // Also updated required size value
-  // defined new variable allPizzas (DRY)
-  // only one switcher - combined setting size with updating text
-  // move to simplified % size change. TODO - re-work sizing
-  // TODO - summarise and comment change
-  // Other improvements - onload, formatting
+  
   function changeSlider(size) {
     console.log("changeSlider() run");
     switch(size) {
@@ -459,6 +460,7 @@ var resizePizzas = function(size) {
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
 
+// Set initial value to Medium
 window.onload = function() {
   resizePizzas('3');
 };
@@ -499,7 +501,7 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  /* MP-Perf #1
+  /* MP-Perf#1
   Moved calculation of 'var phase' outside for loop
   This uses scrollTop which triggers layout
   For loop changes style
