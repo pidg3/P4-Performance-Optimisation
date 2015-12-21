@@ -8,14 +8,15 @@ Changes made are summarised below. More detail in code comments.
 
 ### Changes made: Portfolio Page
 
-* MP-Perf#4: All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
+* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
+* MP-Perf#5 (index.html) Shrink icon images for homepage using gulp/GraphicsMagick
 
 ### Changes made: Cam's Pizzeria
 
 * MP-Perf#1 (main.js) Moved layout calculation outide of for loop to avoid forced synchronous layout issue. Approx. 20X performance improvement. 
 * MP-Perf#2 (main.js) Defined new variable allPizzas outside sub-functions so only have to calculate once and avoid FSL. Only one switch function - updates text AND returns new pizza size. onload function sets initial value to 'medium'. Approx. 200X performance improvement. #
 * MP-Perf#3 (pizza.html) Reduced image file in size and resolution, down from 2.4MB to 105k.
-* MP-Perf#4: All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
+* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
 * (main.js) Added extra two settings to the slider.
 * (main.js/style.css) Made pizza columns responsive (otherwise pizzas get messed up on mobile/small screens).
 
