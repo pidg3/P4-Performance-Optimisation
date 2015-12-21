@@ -7,7 +7,8 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var minifyCSS = require('gulp-minify-css');
-var del = require('del');
+var gm = require('gulp-gm');
+
 
 // Lint Task
 gulp.task('lint', function() {
@@ -57,6 +58,14 @@ gulp.task('watch', function() {
     gulp.watch('js/*.js', ['scripts']);
 });
 
-// Default Task
-gulp.task('default', ['scripts', 'watch']);
+// Resize images for home page
+gulp.task('resize-home', function () {
+    gulp.src('img/originals/icon-*')
+    .pipe(gm(function (gmfile) {
+	return gmfile.geometry('100x62!');
+    }))
+ 
+    .pipe(gulp.dest('img/icons'));
+});
+
 
