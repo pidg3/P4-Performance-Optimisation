@@ -399,7 +399,6 @@ var pizzaElementGenerator = function(i) {
 };
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
-// OLD TIME - c. 250ms
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
 
@@ -417,7 +416,8 @@ var resizePizzas = function(size) {
   Moved to simplied setting on size - just a px value, no further sub-functions/calculations
   Styling changes in style.css to support this, added media query
   Onload function added to ensure always start @ medium size
-  */
+  -- Time to generate pizza change before improvement = c. 250 - 300ms
+  -- Time to generate pizza change after improvement = c. 1.5 ms */
   var allPizzas = document.querySelectorAll(".randomPizzaContainer > .col-md-6 > .img-responsive");
   
   function changeSlider(size) {
