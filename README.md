@@ -8,10 +8,11 @@ Changes made are summarised below. More detail in code comments.
 
 ### Changes made: Portfolio Pages
 
-* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
-* MP-Perf#5 (index.html) Shrink icon images for homepage using gulp/GraphicsMagick
+* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp ('watch').
+* MP-Perf#5 (index.html) Shrink icon images for homepage using gulp/GraphicsMagick.
 * MP-Perf#6 (all html files AND perfmatters.js) Moved Google Analytics script to perfmatters.js file. This means is no longer render-blocking as can be loaded asynchronously using async tag.
 * MP-Perf#7 (all html files AND perfmatters.js) Google Fonts now load using Google Webfonts Loader, with code in perfmatters.js. This results in FOUT (Flash of Unstyled Text), and under normal circumstances I wouldn't think this would be worth the performance gain for one less css file request. 
+* MP-Perf#8 (all html files) all remaining CSS inlined using Gulp inlineCSS(). This means dev HTML files are in dev_html folder for review. 
 
 ### Changes made: Cam's Pizzeria
 
