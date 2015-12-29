@@ -6,6 +6,8 @@ This project was all about perforance optimisation - both for initial page load,
 
 Changes made are summarised below. More detail in code comments.
 
+The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance-Optimisation/
+
 ### Changes made: Portfolio Pages
 
 * MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp ('watch').
