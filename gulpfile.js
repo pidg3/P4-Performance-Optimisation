@@ -66,8 +66,10 @@ gulp.task('watch', function() {
 gulp.task('resize-home', function () {
     gulp.src('img/originals/icon-*')
     .pipe(gm(function (gmfile) {
+    gmfile.quality(70);
+    gmfile.compress('JPEG');
 	return gmfile.geometry('100x62!');
     }))
- 
+
     .pipe(gulp.dest('img/icons'));
 });
