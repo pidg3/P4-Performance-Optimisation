@@ -2,33 +2,101 @@
 var gulp = require('gulp'); 
 
 // Include Our Plugins
-var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var minifyCSS = require('gulp-minify-css');
-var gm = require('gulp-gm');
+var gm = require('gulp-gm'); // GraphicsMagick
 var inlineCss = require('gulp-inline-css');
 
-// Minify JS for main page
+// Minify JS for main pages and transfer to /dist
 gulp.task('js-main', function() {
-    return gulp.src('js/perfmatters.js')
-        .pipe(rename('perfmatters.min.js'))
+    return gulp.src('src/js/perfmatters.js')
         .pipe(uglify())
-        .pipe(gulp.dest('js'));
+        .pipe(gulp.dest('dist/js'));
 });
 
 // Minify JS for pizza page
 gulp.task('js-pizza', function() {
-    return gulp.src('views/js/main.js')
-        .pipe(rename('main.min.js'))
+    return gulp.src('src/views/js/main.js')
         .pipe(uglify())
-        .pipe(gulp.dest('views/js'));
+        .pipe(gulp.dest('dist/views/js'));
 });
+
+// Inline CSS into HTML files for main pages
+gulp.task('inlineCSS-main', function() {
+    return gulp.src('src/*.html')
+        .pipe(inlineCss())
+        .pipe(gulp.dest('dist'));
+});
+
+// Copy across CSS for pizza page - no changes
+gulp.task('copyCSS-pizza', function() {
+    return gulp.src('src/views/css/*')
+        .pipe(gulp.dest('dist/views/css'));
+});
+
+// Copy across HTML for pizza page - no changes
+gulp.task('copyHTML-pizza', function() {
+    return gulp.src('src/views/*.html')
+        .pipe(gulp.dest('dist/views'));
+});
+
+// Copy across latest files for all areas (except imagery)
+gulp.task('reset', function() {
+    gulp.start('js-main', 'js-pizza', 'inlineCSS-main', 'copyCSS-pizza', 'copyHTML-pizza');
+});
+
+// Watch Files For Changes
+gulp.task('watch', function() {
+    // main HTML/CSS
+    gulp.watch(['src/*.html', 'src/css/*'], ['inlineCSS-main']);
+    // main JS
+    gulp.watch(['src/js/*'], ['js-main']);
+    // pizza HTML/CSS
+    gulp.watch(['src/views/*.html', 'src/views/css/*'], ['copyCSS-pizza', 'copyHTML-pizza']);
+    // pizza JS
+    gulp.watch(['src/views/js/*'], ['js-pizza']);
+});
+
+// Copy and compress images for home page
+gulp.task('copyImages-main', function () {
+    gulp.src('src/img/*')
+    .pipe(gm(function (gmfile) {
+    gmfile.quality(80);
+    return gmfile.compress('JPEG');
+    }))
+
+    .pipe(gulp.dest('dist/img'));
+});
+
+// Resize home page icons
+gulp.task('resizeIcons', function () {
+
+    gulp.src('dist/img/icon-*')
+    .pipe(gm(function (gmfile) {
+    return gmfile.geometry('100x62!');
+    }))
+    .pipe(gulp.dest('dist/img'));
+});
+
+// Copy and compress images for pizza page
+gulp.task('copyImages-pizza', function () {
+    gulp.src('src/views/images/*')
+    .pipe(gm(function (gmfile) {
+    return gmfile.quality(80);
+    }))
+
+    .pipe(gulp.dest('dist/views/images'));
+});
+
+
+
+/* No longer used
+
+// ** CSS inlined so no need to concat/minify
 
 // Concatenate & Minify CSS for main page
 gulp.task('css-main', function() {
     return gulp.src(['css/print.css', 'css/style.css'])
-	.pipe(concat('all.css'))
+    .pipe(concat('all.css'))
         .pipe(gulp.dest('css'))
         .pipe(rename('all.min.css'))
         .pipe(minifyCSS())
@@ -38,38 +106,29 @@ gulp.task('css-main', function() {
 // Concatenate & Minify CSS for pizza page
 gulp.task('css-pizza', function() {
     return gulp.src(['views/css/bootstrap-grid.css', 'views/css/style.css'])
-	.pipe(concat('all.css'))
+    .pipe(concat('all.css'))
         .pipe(gulp.dest('views/css'))
         .pipe(rename('all.min.css'))
         .pipe(minifyCSS())
         .pipe(gulp.dest('views/css'));
 });
 
+// ** Need to think about combined tasks/watchers
+
 // Combine all concatenation/minification tasks for all pages
 gulp.task('minify-all', function() {
     gulp.start('js-main', 'js-pizza', 'css-main', 'css-pizza');
 });
 
-gulp.task('inlineCSS', function() {
-    return gulp.src('dev_html/*.html')
-        .pipe(inlineCss())
-        .pipe(gulp.dest(''));
-});
-
-// Watch Files For Changes
-gulp.task('watch', function() {
-    gulp.watch(['js/perfmatters.js', 'views/js/main.js', 'css/print.css', 'css/style.css', 'views/css/bootstrap-grid.css', 'views/css/style.css'], ['minify-all']);
-    gulp.watch(['dev_html/*'], ['inlineCSS']);
-});
-
-// Resize images for home page
-gulp.task('resize-home', function () {
+gulp.task('copyImages-main', function () {
     gulp.src('img/originals/icon-*')
     .pipe(gm(function (gmfile) {
     gmfile.quality(70);
     gmfile.compress('JPEG');
-	return gmfile.geometry('100x62!');
+    return gmfile.geometry('100x62!');
     }))
 
     .pipe(gulp.dest('img/icons'));
 });
+
+*/
