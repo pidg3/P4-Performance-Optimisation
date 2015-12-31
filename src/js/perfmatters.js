@@ -2,6 +2,7 @@
 // https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
 
 function logCRP() {
+  'use strict';
 	  var t = window.performance.timing,
 	    dcl = t.domContentLoadedEventStart - t.domLoading,
 	    complete = t.domComplete - t.domLoading;
@@ -10,6 +11,7 @@ function logCRP() {
 }
 
 window.addEventListener("load", function(event) {
+  'use strict';
   logCRP();
 });
 
@@ -19,7 +21,7 @@ This means is no longer render-blocking as can be loaded asynchronously using as
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-71848105-1', 'auto');
 ga('send', 'pageview');
@@ -33,6 +35,7 @@ WebFontConfig = {
   }
 };
 (function(d) {
+  'use strict';
    var wf = d.createElement('script'), s = d.scripts[0];
    wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
    s.parentNode.insertBefore(wf, s);

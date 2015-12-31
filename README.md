@@ -25,6 +25,12 @@ The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance
 * (main.js) Added extra two settings to the slider.
 * (main.js/style.css) Made pizza columns responsive (otherwise pizzas get messed up on mobile/small screens).
 
+### Changes made since first review
+
+* Organisation of dev/prod environments improved. I thought this was getting a bit messy before I submitted the first one, but wasn't sure how to reorganise, so I'm glad this got picked up in the code review. All prod code now in 'dist', dev code in 'src'. Gulp watch task set up to automatically copy across any changes. index.html in root automatically redirects to equivalent in 'dist' folder.
+* Use strict mode enabled on all JS functions. 
+
+ 
 #### Original Readme:
 
 Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
