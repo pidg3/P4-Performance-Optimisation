@@ -6,7 +6,7 @@ This project was all about perforance optimisation - both for initial page load,
 
 Changes made are summarised below. More detail in code comments.
 
-The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance-Optimisation/
+The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance-Optimisation/dist/index.html
 
 ### Changes made: Portfolio Pages
 
@@ -22,14 +22,16 @@ The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance
 * MP-Perf#2 (main.js) Defined new variable allPizzas outside sub-functions so only have to calculate once and avoid FSL. Only one switch function - updates text AND returns new pizza size. onload function sets initial value to 'medium'. Approx. 200X performance improvement. #
 * MP-Perf#3 (pizza.html) Reduced image file in size and resolution, down from 2.4MB to 105k.
 * MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
+* MP-Perf#9 (main.js) Defined new function generatePizzas for initial pizza load. Moved pizzasDiv var outside of for loop for DRY.
+* MP-Perf#10 (main.js) Fewer pizzas generated, now depends on window size. 
 * (main.js) Added extra two settings to the slider.
 * (main.js/style.css) Made pizza columns responsive (otherwise pizzas get messed up on mobile/small screens).
 
-### Changes made since first review
+### Main changes made since first code review
 
 * Organisation of dev/prod environments improved. I thought this was getting a bit messy before I submitted the first one, but wasn't sure how to reorganise, so I'm glad this got picked up in the code review. All prod code now in 'dist', dev code in 'src'. Gulp watch task set up to automatically copy across any changes. index.html in root automatically redirects to equivalent in 'dist' folder.
 * Use strict mode enabled on all JS functions. 
-
+* Fewer pizzas generated (MP-Perf#10) and depends on window size. 
  
 #### Original Readme:
 

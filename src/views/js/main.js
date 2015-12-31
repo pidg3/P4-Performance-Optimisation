@@ -415,6 +415,7 @@ var resizePizzas = function(size) {
   'use strict';
   window.performance.mark("mark_start_resize");   // User Timing API function
 
+  // New object to make pizza sizes clearer and allow easier changes
   var pizzaSizes = {
     personal: '30px',
     small: '60px',
@@ -425,7 +426,7 @@ var resizePizzas = function(size) {
 
   /* MP-Perf#2
   Defined new variable allPizzas (DRY) to replace multiple querySelectorAll calls (DRY)
-  Combined bith switchers - same one update text using .innerHTML and updates actual pizza size via return value
+  Combined both switchers - same one update text using .innerHTML and updates actual pizza size via return value
   Moved to simplied setting on size - just a px value, no further sub-functions/calculations
   Styling changes in style.css to support this, added media query
   Onload function added to ensure always start @ medium size
@@ -438,19 +439,20 @@ var resizePizzas = function(size) {
     console.log("changeSlider() run");
     switch(size) {
       case "1":
-        document.querySelector("#pizzaSize").innerHTML = "Personal"; // change label
+        // getElementById used rather than querySelector due to performance boost
+        document.getElementById("pizzaSize").innerHTML = "Personal"; // change label
         return pizzaSizes.personal; // output required size
       case "2":
-        document.querySelector("#pizzaSize").innerHTML = "Small";
+        document.getElementById("pizzaSize").innerHTML = "Small";
         return pizzaSizes.small;
       case "3":
-        document.querySelector("#pizzaSize").innerHTML = "Medium";
+        document.getElementById("pizzaSize").innerHTML = "Medium";
         return pizzaSizes.medium;
       case "4" :
-        document.querySelector("#pizzaSize").innerHTML = "Large";
+        document.getElementById("pizzaSize").innerHTML = "Large";
         return pizzaSizes.large;
       case "5" :
-        document.querySelector("#pizzaSize").innerHTML = "Ginormous";
+        document.getElementById("pizzaSize").innerHTML = "Ginormous";
         return pizzaSizes.ginormous;
       default:
         console.log("bug in changeSliderLabel");
@@ -459,8 +461,10 @@ var resizePizzas = function(size) {
 
   var newPizzaSize = changeSlider(size);
 
+  // new variable defined to length of array doesn't have to be checked each time in for loop below
+  var numberPizzas = allPizzas.length;
   function changePizzaSizes(size) {
-    for (var i = 0; i < allPizzas.length; i++) {
+    for (var i = 0; i < numberPizzas; i++) {
       allPizzas[i].style.width = newPizzaSize;
     }
   }
@@ -483,10 +487,19 @@ window.onload = function() {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+
+/* MP-Perf#9
+Defined pizzasDiv outside the for loop to replace multiple getElementByID calls (DRY)
+Placed in a new function to avoid defining a new global variable
+*/
+function generatePizzas() {
   var pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
-}
+  for (var i = 2; i < 100; i++) {
+    pizzasDiv.appendChild(pizzaElementGenerator(i));
+  }
+};
+generatePizzas();
+
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
@@ -522,15 +535,16 @@ function updatePositions() {
   Moved calculation of 'var phase' outside for loop
   This uses scrollTop which triggers layout
   For loop changes style
-  Therefore a FSL issue is avoided, as layout doesn't have to be recalculated each time
-  -- Time to generate 10 frames before improvement = c. 60ms
-  -- Time to generate 10 frames after improvement = c. 2.5 ms */
+  Therefore a FSL issue is avoided, as layout doesn't have to be recalculated each time */
+  var items = document.getElementsByClassName('mover');
+  var itemsLength = items.length;
 
-  var items = document.querySelectorAll('.mover');
-  var phase = Math.sin((document.body.scrollTop / 1250));
+  var top = document.body.scrollTop / 1250;
+  var phase;
 
-  for (var i = 0; i < items.length; i++) {
-    items[i].style.left = items[i].basicLeft + (100 * phase + (i % 5)) + 'px';
+  for (var i = 0; i < itemsLength; i++) {
+    phase = Math.sin(top + i % 5);
+    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -549,16 +563,31 @@ window.addEventListener('scroll', updatePositions);
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
-  var cols = 8;
-  var s = 256;
-  for (var i = 0; i < 200; i++) {
+
+  /* MP-Perf#10
+  Fewer pizzas generated.
+  Based on size of window i.e. innerWidth and innerHeight
+  Normally reduced from 200 to about 20 - significant performance gain
+  No impact on UX (term used loosely...) as other pizzas hidden anyway
+  /*
+  separation defined average width/height between pizzas
+  also drives number of pizzas generated via cols/rows
+  */
+  var separation = 256;
+  var cols = Math.round(window.innerWidth/separation) + 1; // + 1 ensures doesn't look empty
+  var rows = Math.round(window.innerHeight/separation) + 1;
+
+  var totalMovingPizzas = cols * rows;
+  console.log("Total moving pizzas = " + totalMovingPizzas);
+
+  for (var i = 0; i < totalMovingPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
-    elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    elem.basicLeft = (i % cols) * separation;
+    elem.style.top = (Math.floor(i / cols) * separation) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
