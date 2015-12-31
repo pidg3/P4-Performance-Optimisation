@@ -37,7 +37,7 @@ node_modules folder is .gitignored, npm modules will need to be installed on loc
 * Use strict mode enabled on all JS functions. 
 * Fewer pizzas generated (MP-Perf#10) and depends on window size. 
 
-
+I tried enabling hardware acceleration as the reviewer suggested however this seemed to slow down rather than speed up the scrolling animation. Presumably this is because the animation is so simple, passing it off to the GPU adds more of a performance overhead than is worth. 
  
 #### Original Readme:
 
