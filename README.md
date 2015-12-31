@@ -1,6 +1,6 @@
 ## Website Performance Optimization portfolio project
 
-Here's my effort at P4 for the Udacity Front End Nanodegree course. 
+Here's my second effort at P4 for the Udacity Front End Nanodegree course. 
 
 This project was all about perforance optimisation - both for initial page load, and for interaction/animations once page has loaded. 
 
@@ -8,20 +8,24 @@ Changes made are summarised below. More detail in code comments.
 
 The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance-Optimisation/dist/index.html
 
+The code is organised into two folders: 'dist' for prod and 'dev' for development. Gulp 'watch' task copies across all code files if running. Images need to be copied across manually or using one of image loaders in gulpfile.
+
+node_modules folder is .gitignored, npm modules will need to be installed on local repositories. 
+
 ### Changes made: Portfolio Pages
 
-* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp ('watch').
+* MP-Perf#4 (various) All JS minified, for both main page and Pizza page. All done using Gulp ('watch').
 * MP-Perf#5 (index.html) Shrink and compress icon images for homepage using gulp/GraphicsMagick.
 * MP-Perf#6 (all html files AND perfmatters.js) Moved Google Analytics script to perfmatters.js file. This means is no longer render-blocking as can be loaded asynchronously using async tag.
 * MP-Perf#7 (all html files AND perfmatters.js) Google Fonts now load using Google Webfonts Loader, with code in perfmatters.js. This results in FOUT (Flash of Unstyled Text), and under normal circumstances I wouldn't think this would be worth the performance gain for one less css file request. 
-* MP-Perf#8 (all html files) all remaining CSS inlined using Gulp inlineCSS().
+* MP-Perf#8 (all html files) all remaining CSS inlined using Gulp inlineCSS(). (nb this wasn't done for pizza.html as it seems to cause mysterious issues).
  
 ### Changes made: Cam's Pizzeria
 
 * MP-Perf#1 (main.js) Moved layout calculation outide of for loop to avoid forced synchronous layout issue. Approx. 20X performance improvement. 
 * MP-Perf#2 (main.js) Defined new variable allPizzas outside sub-functions so only have to calculate once and avoid FSL. Only one switch function - updates text AND returns new pizza size. onload function sets initial value to 'medium'. Approx. 200X performance improvement. #
 * MP-Perf#3 (pizza.html) Reduced image file in size and resolution, down from 2.4MB to 105k.
-* MP-Perf#4 (various) All JS and CSS concatenated and minified, for both main page and Pizza page. All done using Gulp. 
+* MP-Perf#4 (various) All JS minified, for both main page and Pizza page. All done using Gulp. 
 * MP-Perf#9 (main.js) Defined new function generatePizzas for initial pizza load. Moved pizzasDiv var outside of for loop for DRY.
 * MP-Perf#10 (main.js) Fewer pizzas generated, now depends on window size. 
 * (main.js) Added extra two settings to the slider.
@@ -32,6 +36,8 @@ The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance
 * Organisation of dev/prod environments improved. I thought this was getting a bit messy before I submitted the first one, but wasn't sure how to reorganise, so I'm glad this got picked up in the code review. All prod code now in 'dist', dev code in 'src'. Gulp watch task set up to automatically copy across any changes. index.html in root automatically redirects to equivalent in 'dist' folder.
 * Use strict mode enabled on all JS functions. 
 * Fewer pizzas generated (MP-Perf#10) and depends on window size. 
+
+
  
 #### Original Readme:
 
