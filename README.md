@@ -10,8 +10,6 @@ The site itself is hosted on Github Pages: http://pidg3.github.io/P4-Performance
 
 The code is organised into two folders: 'dist' for prod and 'dev' for development. Gulp 'watch' task copies across all code files if running. Images need to be copied across manually or using one of image loaders in gulpfile.
 
-node_modules folder is .gitignored, npm modules will need to be installed on local repositories. 
-
 ### Changes made: Portfolio Pages
 
 * MP-Perf#4 (various) All JS minified, for both main page and Pizza page. All done using Gulp ('watch').
@@ -47,7 +45,7 @@ To get started, check out the repository, inspect the code,
 
 ### Getting started
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+#### Part 1: Optimize PageSpeed Insights score for index.html
 
 Some useful tips to help you get started:
 
@@ -71,7 +69,7 @@ Some useful tips to help you get started:
 
 Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
 
-####Part 2: Optimize Frames per Second in pizza.html
+#### Part 2: Optimize Frames per Second in pizza.html
 
 To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
 
